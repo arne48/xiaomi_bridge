@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="robot_description" command="xacro --check-order $(find xiaomi_bridge)/urdf/xiaomi_gen1.urdf" />
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+  <node pkg="xiaomi_bridge" type="xiaomi_bridge_node" name="xiaomi_bridge"/>
+</launch>

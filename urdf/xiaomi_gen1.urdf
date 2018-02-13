@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+  <robot name="xiaomi_gen1">
+
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+  <material name="orange">
+    <color rgba="1.0 0.4 0.0 1.0"/>
+  </material>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.085" radius="0.1725"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <axis xyz="0 0 0"/>
+    <origin rpy="0 0 0" xyz="0 0 0.0425"/>
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
+
+  <link name="base_footprint" />
+
+  <joint name="front_sonar_joint" type="fixed">
+    <axis xyz="0 0 0"/>
+    <origin rpy="0 0 0" xyz="0.1725 0 0"/>
+    <parent link="base_link"/>
+    <child link="front_sonar_link"/>
+  </joint>
+
+  <link name="front_sonar_link" />
+
+  <joint name="base_laser_joint" type="fixed">
+    <axis xyz="0 0 0"/>
+    <origin rpy="0 0 1.703441" xyz="-0.1 0 0.0475"/>
+    <parent link="base_link"/>
+    <child link="base_laser_link"/>
+  </joint>
+
+  <link name="base_laser_link" type="laser">
+    <visual>
+      <geometry>
+        <cylinder length="0.01" radius="0.035"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+  </link>
+
+  <joint name="base_laser_top_joint" type="fixed">
+    <axis xyz="0 0 0"/>
+    <origin rpy="0 0 0" xyz="-0.1 0 0.0575"/>
+    <parent link="base_link"/>
+    <child link="base_laser_top_link"/>
+  </joint>
+
+  <link name="base_laser_top_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.01" radius="0.04"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+</robot>
