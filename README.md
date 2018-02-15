@@ -1,2 +1,2 @@
-- The bridge is already working.
-- readme is coming soon
+- The bridge and navigation are already working.
+- readme and howto are coming soon
