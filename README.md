@@ -1,0 +1,2 @@
+- The bridge and navigation are already working.
+- readme and howto are coming soon
