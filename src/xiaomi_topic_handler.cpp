@@ -28,10 +28,10 @@ void XiaomiTopicHandler::run()
 
   wall_ir_pub_= nh_.advertise<sensor_msgs::Range>("/wall_distance", 10);
 
-  cliff_0_pub_= nh_.advertise<sensor_msgs::Range>("/cliff/distance_0", 10);
-  cliff_1_pub_= nh_.advertise<sensor_msgs::Range>("/cliff/distance_1", 10);
-  cliff_2_pub_= nh_.advertise<sensor_msgs::Range>("/cliff/distance_2", 10);
-  cliff_3_pub_= nh_.advertise<sensor_msgs::Range>("/cliff/distance_3", 10);
+  cliff_fr_pub_= nh_.advertise<sensor_msgs::Range>("/cliff/front_right", 10);
+  cliff_fl_pub_= nh_.advertise<sensor_msgs::Range>("/cliff/front_left", 10);
+  cliff_r_pub_= nh_.advertise<sensor_msgs::Range>("/cliff/right", 10);
+  cliff_l_pub_= nh_.advertise<sensor_msgs::Range>("/cliff/left", 10);
 
 
   ros::Rate loop_rate(20);
@@ -84,25 +84,25 @@ void XiaomiTopicHandler::publishCliffData_(struct irData_t data)
 
   sensor_msgs::Range msg;
   msg.header.stamp = ros::Time::now();
-  msg.header.frame_id = "cliff_sensor_0_link";
+  msg.header.frame_id = "cliff_sensor_fr_link";
   msg.radiation_type = sensor_msgs::Range::INFRARED;
   msg.max_range = 1.0;
   msg.min_range = 0.0;
   msg.field_of_view = 0.1;
   msg.range = data.cliff0;
-  cliff_0_pub_.publish(msg);
+  cliff_fr_pub_.publish(msg);
 
-  msg.header.frame_id = "cliff_sensor_1_link";
+  msg.header.frame_id = "cliff_sensor_fl_link";
   msg.range = data.cliff1;
-  cliff_1_pub_.publish(msg);
+  cliff_fl_pub_.publish(msg);
 
-  msg.header.frame_id = "cliff_sensor_2_link";
+  msg.header.frame_id = "cliff_sensor_r_link";
   msg.range = data.cliff2;
-  cliff_2_pub_.publish(msg);
+  cliff_r_pub_.publish(msg);
 
-  msg.header.frame_id = "cliff_sensor_3_link";
+  msg.header.frame_id = "cliff_sensor_l_link";
   msg.range = data.cliff3;
-  cliff_3_pub_.publish(msg);
+  cliff_l_pub_.publish(msg);
 
 }
 

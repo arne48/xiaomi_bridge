@@ -27,6 +27,42 @@
 
   <link name="base_footprint" />
 
+  <joint name="cliff_sensor_fr_joint" type="fixed">
+    <axis xyz="0 0 0"/>
+    <origin rpy="0 1.5708 -0.174533" xyz="0.15515 -0.04654 0"/>
+    <parent link="base_footprint"/>
+    <child link="cliff_sensor_fr_link"/>
+  </joint>
+
+  <link name="cliff_sensor_fr_link" />
+
+  <joint name="cliff_sensor_fl_joint" type="fixed">
+    <axis xyz="0 0 0"/>
+    <origin rpy="0 1.5708 0.174533" xyz="0.15515 0.04654 0"/>
+    <parent link="base_footprint"/>
+    <child link="cliff_sensor_fl_link"/>
+  </joint>
+
+  <link name="cliff_sensor_fl_link" />
+
+  <joint name="cliff_sensor_r_joint" type="fixed">
+    <axis xyz="0 0 0"/>
+    <origin rpy="0 1.5708 -1.39626" xyz="0.06119 -0.1499 0"/>
+    <parent link="base_footprint"/>
+    <child link="cliff_sensor_r_link"/>
+  </joint>
+
+  <link name="cliff_sensor_r_link" />
+
+  <joint name="cliff_sensor_l_joint" type="fixed">
+    <axis xyz="0 0 0"/>
+    <origin rpy="0 1.5708 1.39626" xyz="0.06119 0.1499 0"/>
+    <parent link="base_footprint"/>
+    <child link="cliff_sensor_l_link"/>
+  </joint>
+
+  <link name="cliff_sensor_l_link" />
+
   <joint name="front_sonar_joint" type="fixed">
     <axis xyz="0 0 0"/>
     <origin rpy="0 0 0" xyz="0.1725 0 0"/>
@@ -35,6 +71,15 @@
   </joint>
 
   <link name="front_sonar_link" />
+
+  <joint name="wall_distance_joint" type="fixed">
+    <axis xyz="0 0 0"/>
+    <origin rpy="0 0 -1.11701" xyz="0.03918 -0.16021 0"/>
+    <parent link="base_link"/>
+    <child link="wall_distance_link"/>
+  </joint>
+
+  <link name="wall_distance_link" />
 
   <joint name="base_laser_joint" type="fixed">
     <axis xyz="0 0 0"/>

@@ -47,10 +47,10 @@ private:
 
   ros::Publisher wall_ir_pub_;
 
-  ros::Publisher cliff_0_pub_;
-  ros::Publisher cliff_1_pub_;
-  ros::Publisher cliff_2_pub_;
-  ros::Publisher cliff_3_pub_;
+  ros::Publisher cliff_fr_pub_;
+  ros::Publisher cliff_fl_pub_;
+  ros::Publisher cliff_r_pub_;
+  ros::Publisher cliff_l_pub_;
 
 };
 

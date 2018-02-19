@@ -7,7 +7,6 @@ Panels:
         - /Global Options1
         - /Status1
         - /TF1/Frames1
-        - /Map2
       Splitter Ratio: 0.680232584
     Tree Height: 775
   - Class: rviz/Selection
@@ -55,7 +54,7 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-      Marker Scale: 0.5
+      Marker Scale: 0.200000003
       Name: TF
       Show Arrows: true
       Show Axes: true
@@ -123,6 +122,30 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        cliff_sensor_fl_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        cliff_sensor_fr_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        cliff_sensor_l_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        cliff_sensor_r_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        front_sonar_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wall_distance_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -149,6 +172,56 @@ Visualization Manager:
       Unreliable: false
       Use Timestamp: false
       Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Range
+      Color: 255; 255; 255
+      Enabled: true
+      Name: Range
+      Queue Size: 100
+      Topic: /cliff/front_left
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Range
+      Color: 255; 255; 255
+      Enabled: true
+      Name: Range
+      Queue Size: 100
+      Topic: /cliff/front_right
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Range
+      Color: 255; 255; 255
+      Enabled: true
+      Name: Range
+      Queue Size: 100
+      Topic: /cliff/left
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Range
+      Color: 255; 255; 255
+      Enabled: true
+      Name: Range
+      Queue Size: 100
+      Topic: /cliff/right
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Range
+      Color: 255; 255; 255
+      Enabled: true
+      Name: Range
+      Queue Size: 100
+      Topic: /front_sonar
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -174,25 +247,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 6.51797581
+      Distance: 6.92896938
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.133157715
-        Y: 0.415862113
-        Z: 0.663850307
+        X: 0.36742264
+        Y: 0.358554035
+        Z: 0.530284166
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.709798038
+      Pitch: 0.784798145
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.910371006
+      Yaw: 0.510371268
     Saved: ~
 Window Geometry:
   Displays:
