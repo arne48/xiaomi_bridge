@@ -17,6 +17,7 @@ class XiaomiPlayerInterface
 {
 public:
   XiaomiPlayerInterface();
+  XiaomiPlayerInterface(std::string);
   ~XiaomiPlayerInterface();
 
   void getLaserData(float*);

@@ -3,9 +3,12 @@
 #include <libplayerc/playerc.h>
 
 XiaomiPlayerInterface::XiaomiPlayerInterface()
+= default;
+
+XiaomiPlayerInterface::XiaomiPlayerInterface(std::string vacuum_ip)
 {
 
-  robot_client_ = playerc_client_create(NULL, "192.168.8.1", 6665);
+  robot_client_ = playerc_client_create(NULL, vacuum_ip.c_str(), 6665);
   if (0 != playerc_client_connect(robot_client_))
     std::cout<<"Error when connecting to: Robot"<<std::endl;
 
@@ -54,15 +57,22 @@ void XiaomiPlayerInterface::updateRobotState()
 
 irData_t XiaomiPlayerInterface::getIrSensorData()
 {
-  struct irData_t data = {
-    .wall = ir_wall_->data.ranges[0],
-    .cliff0 = ir_cliff_->data.ranges[0],
-    .cliff1 = ir_cliff_->data.ranges[1],
-    .cliff2 = ir_cliff_->data.ranges[2],
-    .cliff3 = ir_cliff_->data.ranges[3]
-  };
+  if (ir_wall_->data.ranges_count == 4)
+  {
+    struct irData_t data = {
+      .wall = ir_wall_->data.ranges[0],
+      .cliff0 = ir_cliff_->data.ranges[0],
+      .cliff1 = ir_cliff_->data.ranges[1],
+      .cliff2 = ir_cliff_->data.ranges[2],
+      .cliff3 = ir_cliff_->data.ranges[3]
+    };
 
-  return data;
+    return data;
+  } else
+  {
+    return {0.0, 0.0, 0.0, 0.0};
+  }
+
 }
 
 double XiaomiPlayerInterface::getSonarData()

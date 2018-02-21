@@ -52,6 +52,8 @@ private:
   ros::Publisher cliff_r_pub_;
   ros::Publisher cliff_l_pub_;
 
+  std::string vacuum_ip_;
+
 };
 
 #endif //XIAOMI_BRIDGE_XIAOMI_TOPIC_HANDLER_H

@@ -3,14 +3,18 @@
 XiaomiTopicHandler::XiaomiTopicHandler()
 {
   nh_ = ros::NodeHandle();
-  player_interface_ = new XiaomiPlayerInterface();
+  nh_.param<std::string>("vacuum_ip", vacuum_ip_, "192.168.8.1");
+  ROS_INFO("Connecting to Xiaomi Cleaner.");
+  player_interface_ = new XiaomiPlayerInterface(vacuum_ip_);
+  ROS_INFO("Successfully connected to Xiaomi Cleaner.");
 }
 
 XiaomiTopicHandler::XiaomiTopicHandler(ros::NodeHandle nh)
 {
   nh_ = nh;
+  nh_.param<std::string>("vacuum_ip", vacuum_ip_, "192.168.8.1");
   ROS_INFO("Connecting to Xiaomi Cleaner.");
-  player_interface_ = new XiaomiPlayerInterface();
+  player_interface_ = new XiaomiPlayerInterface(vacuum_ip_);
   ROS_INFO("Successfully connected to Xiaomi Cleaner.");
 }
 

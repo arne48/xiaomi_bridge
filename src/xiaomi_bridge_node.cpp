@@ -3,7 +3,7 @@
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "xiaomi_bridge_node");
-  ros::NodeHandle nh;
+  ros::NodeHandle nh("~");
 
   XiaomiTopicHandler *handler = new XiaomiTopicHandler(nh);
   handler->run();
