@@ -19,8 +19,8 @@ DWAPlannerROS:
   min_rot_vel: 0.4  # this is the min angular velocity when there is negligible translational velocity
   rot_stopped_vel: 0.4
 
-  acc_lim_x: 1.0 # maximum is theoretically 2.0, but we
-  acc_lim_theta: 2.0
+  acc_lim_x: 0.6
+  acc_lim_theta: 0.8
   acc_lim_y: 0.0      # diff drive robot
 
 # Goal Tolerance Parameters
