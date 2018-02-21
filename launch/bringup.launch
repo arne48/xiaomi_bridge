@@ -2,5 +2,7 @@
 <launch>
   <param name="robot_description" command="xacro --check-order $(find xiaomi_bridge)/urdf/xiaomi_gen1.urdf" />
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
-  <node pkg="xiaomi_bridge" type="xiaomi_bridge_node" name="xiaomi_bridge"/>
+  <node pkg="xiaomi_bridge" type="xiaomi_bridge_node" name="xiaomi_bridge_node">
+    <param name="vacuum_ip" type="str" value="192.168.0.20" />
+  </node>
 </launch>

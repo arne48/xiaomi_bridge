@@ -1,0 +1,4 @@
+<launch>
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false"
+          args="-d $(find xiaomi_bridge)/config/xiaomi_nav.rviz" output="screen"/>
+</launch>
