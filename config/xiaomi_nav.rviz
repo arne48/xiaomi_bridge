@@ -6,8 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /Group1
-        - /Group2
+        - /Robot1
+        - /Navigation1
       Splitter Ratio: 0.680232584
     Tree Height: 775
   - Class: rviz/Selection
@@ -56,7 +56,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Group
       Displays:
-        - Alpha: 0.699999988
+        - Alpha: 0.899999976
           Class: rviz/RobotModel
           Collision Enabled: false
           Enabled: true
@@ -160,7 +160,7 @@ Visualization Manager:
           Update Interval: 0
           Value: false
       Enabled: true
-      Name: Group
+      Name: Robot
     - Class: rviz/Group
       Displays:
         - Alpha: 1
@@ -230,7 +230,7 @@ Visualization Manager:
           Use Timestamp: false
           Value: true
       Enabled: true
-      Name: Group
+      Name: Navigation
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -256,25 +256,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.66667938
+      Distance: 5.61603689
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.321871787
-        Y: 1.70165145
-        Z: -0.193119437
+        X: -0.602429986
+        Y: 1.10201645
+        Z: -0.153319672
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 1.11979771
+      Pitch: 0.739798069
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.700371206
+      Yaw: 5.78355789
     Saved: ~
 Window Geometry:
   Displays:
