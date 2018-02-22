@@ -68,7 +68,7 @@ The configuration for the navigation stack is closely oriented to the TurtleBot.
 
 ![ ](https://drive.google.com/uc?id=1Qw-3iiU4P2gYF4RGi7YdM-dyWkz8WmFI  "rviz overview")
 
-## Know issues
+## Known issues
 1. The robot can't be controlled while a bumper is pressed.
 2. Yes, the startup is that hacky. I am gratefully looking for another way to startup the motors and sensors. The best way would be, if that is even possible while the RobotController keeps running.
-3. Preventing the RobotController from running drastically limits the normal functiions of the robot. Such as the buttons, the power indicator via LED color and the Mi Home app won't work.
+3. Preventing the RobotController from running drastically limits the normal functions of the robot. Such as the buttons, the power indicator via LED color and the Mi Home app.
