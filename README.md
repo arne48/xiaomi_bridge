@@ -39,24 +39,24 @@ The can be started on another computer in the same network as the the vacuum cle
 6. Now you should just hear the LaserScanner turning. If so, the robot is ready to be controlled by you.
 
 ### Details
-- Parameter
-	_~ vacuum_ip [str] __|__ IP addres of the robot. __default__: 192.168.8.1_
-- Topics
-	_/cmd\_vel [geometry\_msgs::Twist]_
-	_/scan [sensor\_msgs::LaserScan]_
-	_/odom [nav\_msgs::Odometry]_
-	_/battery\_state [sensor\_msgs::BatteryState]_
-	_/front\_sonar [sensor\_msgs::Range]_
-	_/wall\_distance [sensor\_msgs::Range]_
-	_/cliff/front\_right [sensor\_msgs::Range]_
-	_/cliff/front\_left [sensor\_msgs::Range]_
-	_/cliff/right [sensor\_msgs::Range]_
-	_/cliff/left [sensor\_msgs::Range]_
-- Launch Files
-	_bringup.launch_ __|__ starts the xiaomi_bridge_node, loads the robot model, and starts the robot state publisher. Contains the setting of the IP address parameter.
-	_move_base.launch_ __|__ starts the move_base node
-	_navigation.launch_ __|__ starts all needed nodes and loads all parameters for navigation
-	_rviz.launch_ __|__ starts rviz with the provided config file
+* *Parameter*
+	* _~ vacuum_ip [str] __|__ IP addres of the robot. __default__: 192.168.8.1_
+* *Topics*
+	* _/cmd\_vel [geometry\_msgs::Twist]_
+	* _/scan [sensor\_msgs::LaserScan]_
+	* _/odom [nav\_msgs::Odometry]_
+	* _/battery\_state [sensor\_msgs::BatteryState]_
+	* _/front\_sonar [sensor\_msgs::Range]_
+	* _/wall\_distance [sensor\_msgs::Range]_
+	* _/cliff/front\_right [sensor\_msgs::Range]_
+	* _/cliff/front\_left [sensor\_msgs::Range]_
+	* _/cliff/right [sensor\_msgs::Range]_
+	* _/cliff/left [sensor\_msgs::Range]_
+* *Launch Files*
+	* _bringup.launch_ __|__ starts the xiaomi_bridge_node, loads the robot model, and starts the robot state publisher. Contains the setting of the IP address parameter.
+	* _move_base.launch_ __|__ starts the move_base node
+	* _navigation.launch_ __|__ starts all needed nodes and loads all parameters for navigation
+	* _rviz.launch_ __|__ starts rviz with the provided config file
 	
 	
 	
