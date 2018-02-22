@@ -8,5 +8,6 @@ int main(int argc, char **argv)
   XiaomiTopicHandler *handler = new XiaomiTopicHandler(nh);
   handler->run();
 
+  delete handler;
   return 0;
 }

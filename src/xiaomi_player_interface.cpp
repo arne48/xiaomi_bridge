@@ -2,9 +2,6 @@
 #include <libplayerc++/playerc++.h>
 #include <libplayerc/playerc.h>
 
-XiaomiPlayerInterface::XiaomiPlayerInterface()
-= default;
-
 XiaomiPlayerInterface::XiaomiPlayerInterface(std::string vacuum_ip)
 {
 
@@ -38,8 +35,7 @@ XiaomiPlayerInterface::XiaomiPlayerInterface(std::string vacuum_ip)
 
 }
 
-XiaomiPlayerInterface::~XiaomiPlayerInterface()
-= default;
+XiaomiPlayerInterface::~XiaomiPlayerInterface() = default;
 
 void XiaomiPlayerInterface::getLaserData(float* scan_data)
 {

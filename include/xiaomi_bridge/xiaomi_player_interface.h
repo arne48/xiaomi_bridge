@@ -16,7 +16,6 @@ struct odometryData_t {double px; double py; double vx; double vy; double rot_py
 class XiaomiPlayerInterface
 {
 public:
-  XiaomiPlayerInterface();
   XiaomiPlayerInterface(std::string);
   ~XiaomiPlayerInterface();
 

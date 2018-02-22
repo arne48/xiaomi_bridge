@@ -1,14 +1,5 @@
 #include <xiaomi_bridge/xiaomi_topic_handler.h>
 
-XiaomiTopicHandler::XiaomiTopicHandler()
-{
-  nh_ = ros::NodeHandle();
-  nh_.param<std::string>("vacuum_ip", vacuum_ip_, "192.168.8.1");
-  ROS_INFO("Connecting to Xiaomi Cleaner.");
-  player_interface_ = new XiaomiPlayerInterface(vacuum_ip_);
-  ROS_INFO("Successfully connected to Xiaomi Cleaner.");
-}
-
 XiaomiTopicHandler::XiaomiTopicHandler(ros::NodeHandle nh)
 {
   nh_ = nh;
@@ -19,7 +10,9 @@ XiaomiTopicHandler::XiaomiTopicHandler(ros::NodeHandle nh)
 }
 
 XiaomiTopicHandler::~XiaomiTopicHandler()
-= default;
+{
+  delete player_interface_;
+}
 
 void XiaomiTopicHandler::run()
 {

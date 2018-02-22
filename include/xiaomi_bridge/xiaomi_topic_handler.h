@@ -20,7 +20,6 @@
 class XiaomiTopicHandler
 {
 public:
-  XiaomiTopicHandler();
   XiaomiTopicHandler(ros::NodeHandle nh);
   ~XiaomiTopicHandler();
 
