@@ -32,7 +32,7 @@ The can be started on another computer in the same network as the the vacuum cle
 
 ### Startup
 1. Make sure the RoboController is not running.
-2. Connect to the robot via ssh and start the RoboController.
+2. Connect to the robot by ssh and start the RoboController via _"/opt/rockrobo/cleaner/bin/RoboController"_.
 3. Push the "Home" button on the robot to let it search for the dock.
 4. Once the robot keeps moving, kill the RoboController via _Ctrl-C_
 5. Lift the robot to interrupt its navigation.
