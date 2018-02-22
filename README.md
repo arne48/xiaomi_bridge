@@ -40,7 +40,7 @@ The can be started on another computer in the same network as the the vacuum cle
 
 ### Details
 * *Parameter*
-	* _~ vacuum\_ip [str] __|__ IP addres of the robot. __default__: 192.168.8.1_
+	* _~ vacuum\_ip [str]_ __|__ _IP addres of the robot._ __default:__ _192.168.8.1_
 * *Topics*
 	* _/cmd\_vel [geometry\_msgs::Twist]_
 	* _/scan [sensor\_msgs::LaserScan]_
