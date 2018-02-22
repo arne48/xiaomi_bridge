@@ -23,18 +23,18 @@ __1. Rooted Vacuum Cleaner:__ Please use the great work of Dennis Giese and Dani
 
 __2. Player client libraries:__ Depending on your distribution you might find packages or you have to build it from source. Detailed information and how-tos for this are available here, [http://playerstage.sourceforge.net/doc/Player-svn/player](http://playerstage.sourceforge.net/doc/Player-svn/player)
 
-__3. Disable Watchdog for RobotController:__
+__3. Disable Watchdog for RoboController:__ On the robot, in _"/opt/rockrobo/watchdog/ProcessList.conf"_ comment out the line _"RoboController,setsid RoboController&,1,3,0"_
 
-__4. Disable Firewall "Drop" rules for Player ports:__ 
+__4. Disable Firewall "Drop" rules for Player ports:__ On the robot, in _"/opt/rockrobo/watchdog/rrwatchdoge.conf"_ comment out the lines _"iptables -I INPUT -j DROP -p tcp --dport 6665"_ and _"iptables -I INPUT -j DROP -p udp --dport 6665"_
 
 ## Bridge Node
 The can be started on another computer in the same network as the the vacuum cleaner. It connects to the internally used player server for getting sensor data and commanding the robot to move.
 
 ### Startup
-1. Make sure the RobotController is not running.
-2. Connect to the robot via ssh and start the RobotController.
+1. Make sure the RoboController is not running.
+2. Connect to the robot via ssh and start the RoboController.
 3. Push the "Home" button on the robot to let it search for the dock.
-4. Once the robot keeps moving, kill the RobotController via _Ctrl-C_
+4. Once the robot keeps moving, kill the RoboController via _Ctrl-C_
 5. Lift the robot to interrupt its navigation.
 6. Now you should just hear the LaserScanner turning. If so, the robot is ready to be controlled by you.
 
@@ -70,5 +70,5 @@ The configuration for the navigation stack is closely oriented to the TurtleBot.
 
 ## Known issues
 1. The robot can't be controlled while a bumper is pressed.
-2. Yes, the startup is that hacky. I am gratefully looking for another way to startup the motors and sensors. The best way would be, if that is even possible while the RobotController keeps running.
-3. Preventing the RobotController from running drastically limits the normal functions of the robot. Such as the buttons, the power indicator via LED color and the Mi Home app.
+2. Yes, the startup is that hacky. I am gratefully looking for another way to startup the motors and sensors. The best way would be, if that is even possible while the RoboController keeps running.
+3. Preventing the RoboController from running drastically limits the normal functions of the robot. Such as the buttons, the power indicator via LED color and the Mi Home app.
