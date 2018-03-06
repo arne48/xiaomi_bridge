@@ -1,14 +1,9 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(xiaomi_bridge)
 
+include(ExternalProject)
 set (CMAKE_CXX_STANDARD 11)
 
-## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
-
-## Find catkin macros and libraries
-## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   roscpp
@@ -19,99 +14,6 @@ find_package(catkin REQUIRED COMPONENTS
   tf
 )
 
-#find_package(PkgConfig REQUIRED)
-#pkg_check_modules (PLAYERCC playerc++)
-#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} $(PLAYERCC_CFLAGS)")
-
-## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
-
-
-## Uncomment this if the package has a setup.py. This macro ensures
-## modules and global scripts declared therein get installed
-## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
-
-################################################
-## Declare ROS messages, services and actions ##
-################################################
-
-## To declare and build messages, services or actions from within this
-## package, follow these steps:
-## * Let MSG_DEP_SET be the set of packages whose message types you use in
-##   your messages/services/actions (e.g. std_msgs, actionlib_msgs, ...).
-## * In the file package.xml:
-##   * add a build_depend tag for "message_generation"
-##   * add a build_depend and a run_depend tag for each package in MSG_DEP_SET
-##   * If MSG_DEP_SET isn't empty the following dependency has been pulled in
-##     but can be declared for certainty nonetheless:
-##     * add a run_depend tag for "message_runtime"
-## * In this file (CMakeLists.txt):
-##   * add "message_generation" and every package in MSG_DEP_SET to
-##     find_package(catkin REQUIRED COMPONENTS ...)
-##   * add "message_runtime" and every package in MSG_DEP_SET to
-##     catkin_package(CATKIN_DEPENDS ...)
-##   * uncomment the add_*_files sections below as needed
-##     and list every .msg/.srv/.action file to be processed
-##   * uncomment the generate_messages entry below
-##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
-
-## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
-
-## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
-
-## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
-#   Action2.action
-# )
-
-## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   nav_msgs#   sensor_msgs#   std_msgs
-# )
-
-################################################
-## Declare ROS dynamic reconfigure parameters ##
-################################################
-
-## To declare and build dynamic reconfigure parameters within this
-## package, follow these steps:
-## * In the file package.xml:
-##   * add a build_depend and a run_depend tag for "dynamic_reconfigure"
-## * In this file (CMakeLists.txt):
-##   * add "dynamic_reconfigure" to
-##     find_package(catkin REQUIRED COMPONENTS ...)
-##   * uncomment the "generate_dynamic_reconfigure_options" section below
-##     and list every .cfg file to be processed
-
-## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
-#   cfg/DynReconf1.cfg
-#   cfg/DynReconf2.cfg
-# )
-
-###################################
-## catkin specific configuration ##
-###################################
-## The catkin_package macro generates cmake config files for your package
-## Declare things to be passed to dependent projects
-## INCLUDE_DIRS: uncomment this if your package contains header files
-## LIBRARIES: libraries you create in this project that dependent projects also need
-## CATKIN_DEPENDS: catkin_packages dependent projects also need
-## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES xiaomi_bridge
@@ -119,92 +21,23 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
-###########
-## Build ##
-###########
-
-## Specify additional locations of header files
-## Your package locations should be listed before other locations
-include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
+ExternalProject_Add(player-lib
+        SVN_REPOSITORY    https://svn.code.sf.net/p/playerstage/svn/code/player/trunk
+        PATCH_COMMAND patch -p1 < ${PROJECT_SOURCE_DIR}/patches/player.patch
+        CMAKE_ARGS -DBUILD_EXAMPLES=OFF -DINCLUDE_RTK=OFF -DINCLUDE_RTKGUI=OFF -DPLAYER_BUILD_TESTS=OFF -DBUILD_PLAYERCC=OFF -DBUILD_PLAYERCC_BOOST=OFF -DBUILD_PYTHONC_BINDINGS=OFF -DBUILD_UTILS=OFF -DENABLE_DRIVER_ACCEL_CALIB=OFF -DENABLE_DRIVER_ACR120U=OFF -DENABLE_DRIVER_ACTS=OFF -DENABLE_DRIVER_AIOTOSONAR=OFF -DENABLE_DRIVER_ALSA=OFF -DENABLE_DRIVER_AMCL=OFF -DENABLE_DRIVER_AMTECM5=OFF -DENABLE_DRIVER_AMTECPOWERCUBE=OFF -DENABLE_DRIVER_AODV=OFF -DENABLE_DRIVER_ARTOOLKITPLUS=OFF -DENABLE_DRIVER_BITLOGIC=OFF -DENABLE_DRIVER_BLOBPOSITION=OFF -DENABLE_DRIVER_BLOBTODIO=OFF -DENABLE_DRIVER_BLOBTRACKER=OFF -DENABLE_DRIVER_BUMPER2LASER=OFF -DENABLE_DRIVER_BUMPERSAFE=OFF -DENABLE_DRIVER_BUMPERTODIO=OFF -DENABLE_DRIVER_CAMERA1394=OFF -DENABLE_DRIVER_CAMERACOMPRESS=OFF -DENABLE_DRIVER_CAMERAGST=OFF -DENABLE_DRIVER_CAMERAREQ=OFF -DENABLE_DRIVER_CAMERAUNCOMPRESS=OFF -DENABLE_DRIVER_CAMERAUVC=OFF -DENABLE_DRIVER_CAMERAV4L=OFF -DENABLE_DRIVER_CAMERAV4L2=OFF -DENABLE_DRIVER_CAMFILTER=OFF -DENABLE_DRIVER_CANONVCC4=OFF -DENABLE_DRIVER_CLODBUSTER=OFF -DENABLE_DRIVER_CMDSPLITTER=OFF -DENABLE_DRIVER_CMUCAM2=OFF -DENABLE_DRIVER_CMVISION=OFF -DENABLE_DRIVER_CREATE=OFF -DENABLE_DRIVER_CVCAM=OFF -DENABLE_DRIVER_DEADSTOP=OFF -DENABLE_DRIVER_DIFFERENTIAL=OFF -DENABLE_DRIVER_DIOCMD=OFF -DENABLE_DRIVER_DIODELAY=OFF -DENABLE_DRIVER_DIOLATCH=OFF -DENABLE_DRIVER_DUMMY=OFF -DENABLE_DRIVER_EEDHCONTROLLER=OFF -DENABLE_DRIVER_EKFVLOC=OFF -DENABLE_DRIVER_EPUCK=OFF -DENABLE_DRIVER_ER1=OFF -DENABLE_DRIVER_ERRATIC=OFF -DENABLE_DRIVER_FAKELOCALIZE=OFF -DENABLE_DRIVER_FESTIVAL=OFF -DENABLE_DRIVER_FLEXIPORT=OFF -DENABLE_DRIVER_FLOCKOFBIRDS=OFF -DENABLE_DRIVER_GARCIA=OFF -DENABLE_DRIVER_GARMINNMEA=OFF -DENABLE_DRIVER_GBXGARMINACFR=OFF -DENABLE_DRIVER_GBXSICKACFR=OFF -DENABLE_DRIVER_GLOBALIZE=OFF -DENABLE_DRIVER_GOTO=OFF -DENABLE_DRIVER_GRIDMAP=OFF -DENABLE_DRIVER_GRIPCMD=OFF -DENABLE_DRIVER_GUILE=OFF -DENABLE_DRIVER_HEMISSON=OFF -DENABLE_DRIVER_HOKUYOAIST=OFF -DENABLE_DRIVER_IMAGESEQ=OFF -DENABLE_DRIVER_IMGCMP=OFF -DENABLE_DRIVER_IMGSAVE=OFF -DENABLE_DRIVER_INHIBITOR=OFF -DENABLE_DRIVER_INSIDEM300=OFF -DENABLE_DRIVER_ISENSE=OFF -DENABLE_DRIVER_IWSPY=OFF -DENABLE_DRIVER_KARTOWRITER=OFF -DENABLE_DRIVER_KHEPERA=OFF -DENABLE_DRIVER_KINECT=OFF -DENABLE_DRIVER_LASERBAR=OFF -DENABLE_DRIVER_LASERBARCODE=OFF -DENABLE_DRIVER_LASERCSPACE=OFF -DENABLE_DRIVER_LASERCUTTER=OFF -DENABLE_DRIVER_LASERFEATURE=OFF -DENABLE_DRIVER_LASERPOSEINTERPOLATOR=OFF -DENABLE_DRIVER_LASERPTZCLOUD=OFF -DENABLE_DRIVER_LASERRESCAN=OFF -DENABLE_DRIVER_LASERSAFE=OFF -DENABLE_DRIVER_LASERTORANGER=OFF -DENABLE_DRIVER_LASERVISUALBARCODE=OFF -DENABLE_DRIVER_LASERVISUALBW=OFF -DENABLE_DRIVER_LIBV4L2=OFF -DENABLE_DRIVER_LINUXJOYSTICK=OFF -DENABLE_DRIVER_LINUXWIFI=OFF -DENABLE_DRIVER_LOCALBB=OFF -DENABLE_DRIVER_MAPCSPACE=OFF -DENABLE_DRIVER_MAPFILE=OFF -DENABLE_DRIVER_MAPSCALE=OFF -DENABLE_DRIVER_MBASEDRIVER=OFF -DENABLE_DRIVER_MBICP=OFF -DENABLE_DRIVER_MICA2=OFF -DENABLE_DRIVER_MICROSTRAIN=OFF -DENABLE_DRIVER_MOTIONMIND=OFF -DENABLE_DRIVER_MRICP=OFF -DENABLE_DRIVER_ND=OFF -DENABLE_DRIVER_NIMU=OFF -DENABLE_DRIVER_NOMAD=OFF -DENABLE_DRIVER_NXT=OFF -DENABLE_DRIVER_OBOT=OFF -DENABLE_DRIVER_OCEANSERVER=OFF -DENABLE_DRIVER_OPAQUECMD=OFF -DENABLE_DRIVER_P2OS=OFF -DENABLE_DRIVER_PASSTHROUGH=OFF -DENABLE_DRIVER_PBSLASER=OFF -DENABLE_DRIVER_PHIDGETACC=OFF -DENABLE_DRIVER_PHIDGETIFK=OFF -DENABLE_DRIVER_PORTIO=OFF -DENABLE_DRIVER_POSTGIS=OFF -DENABLE_DRIVER_POSTLOG=OFF -DENABLE_DRIVER_POWERSHOT=OFF -DENABLE_DRIVER_PTU46=OFF -DENABLE_DRIVER_RANGERPOSEINTERPOLATOR=OFF -DENABLE_DRIVER_RANGERTODIO=OFF -DENABLE_DRIVER_RANGERTOLASER=OFF -DENABLE_DRIVER_RAZORIMU=OFF -DENABLE_DRIVER_RCORE_XBRIDGE=OFF -DENABLE_DRIVER_READLOG=OFF -DENABLE_DRIVER_REB=OFF -DENABLE_DRIVER_RELAY=OFF -DENABLE_DRIVER_RFLEX=OFF -DENABLE_DRIVER_ROBOTEQ=OFF -DENABLE_DRIVER_ROBOTINO=OFF -DENABLE_DRIVER_ROBOTRACKER=OFF -DENABLE_DRIVER_ROOMBA=OFF -DENABLE_DRIVER_RS4LEUZE=OFF -DENABLE_DRIVER_RT3XXX=OFF -DENABLE_DRIVER_SEARCHPATTERN=OFF -DENABLE_DRIVER_SEGWAYRMP=OFF -DENABLE_DRIVER_SEGWAYRMP400=OFF -DENABLE_DRIVER_SERIALSTREAM=OFF -DENABLE_DRIVER_SERIO=OFF -DENABLE_DRIVER_SERVICE_ADV_MDNS=OFF -DENABLE_DRIVER_SHAPETRACKER=OFF -DENABLE_DRIVER_SICKLDMRS=OFF -DENABLE_DRIVER_SICKLMS200=OFF -DENABLE_DRIVER_SICKLMS400=OFF -DENABLE_DRIVER_SICKNAV200=OFF -DENABLE_DRIVER_SICKRFI341=OFF -DENABLE_DRIVER_SICKS3000=OFF -DENABLE_DRIVER_SIMPLESHAPE=OFF -DENABLE_DRIVER_SKYETEKM1=OFF -DENABLE_DRIVER_SND=OFF -DENABLE_DRIVER_SONARTORANGER=OFF -DENABLE_DRIVER_SONYEVID30=OFF -DENABLE_DRIVER_SPEECHCMD=OFF -DENABLE_DRIVER_SPHERE=OFF -DENABLE_DRIVER_SPHEREPTZ=OFF -DENABLE_DRIVER_SPHINX2=OFF -DENABLE_DRIVER_SR3000=OFF -DENABLE_DRIVER_STALLTODIO=OFF -DENABLE_DRIVER_STATGRAB=OFF -DENABLE_DRIVER_STOC=OFF -DENABLE_DRIVER_SUPPRESSOR=OFF -DENABLE_DRIVER_SWISSRANGER=OFF -DENABLE_DRIVER_TCPSTREAM=OFF -DENABLE_DRIVER_UNICAPIMAGE=OFF -DENABLE_DRIVER_UPCBARCODE=OFF -DENABLE_DRIVER_VEC2MAP=OFF -DENABLE_DRIVER_VELCMD=OFF -DENABLE_DRIVER_VFH=OFF -DENABLE_DRIVER_VIDEOCANNY=OFF -DENABLE_DRIVER_VMAPFILE=OFF -DENABLE_DRIVER_WAVEFRONT=OFF -DENABLE_DRIVER_WBR914=OFF -DENABLE_DRIVER_WLANSCAN=OFF -DENABLE_DRIVER_WRITELOG=OFF -DENABLE_DRIVER_XSENSMT=OFF -DENABLE_DRIVER_YARPIMAGE=OFF -DCMAKE_INSTALL_PREFIX=${CATKIN_DEVEL_PREFIX}
 )
 
-## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/xiaomi_bridge.cpp
-# )
+include_directories(
+        include
+        ${catkin_INCLUDE_DIRS}
+        ${CATKIN_DEVEL_PREFIX}/include
+)
 
-## Add cmake target dependencies of the library
-## as an example, code may need to be generated before libraries
-## either from message generation or dynamic reconfigure
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-## Declare a C++ executable
-## With catkin_make all packages are built within a single CMake context
-## The recommended prefix ensures that target names across packages don't collide
 add_executable(xiaomi_bridge_node src/xiaomi_bridge_node.cpp src/xiaomi_topic_handler.cpp src/xiaomi_player_interface.cpp)
 
-## Rename C++ executable without prefix
-## The above recommended prefix causes long target names, the following renames the
-## target back to the shorter version for ease of user use
-## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
-# set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
+add_dependencies(xiaomi_bridge_node player-lib)
 
-## Add cmake target dependencies of the executable
-## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_node
         ${catkin_LIBRARIES}
-        playerc
+        ${CATKIN_DEVEL_PREFIX}/lib/libplayerc.so
 )
-
-#############
-## Install ##
-#############
-
-# all install targets should use catkin DESTINATION variables
-# See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
-
-## Mark executable scripts (Python etc.) for installation
-## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
-
-## Mark executables and/or libraries for installation
-# install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
-
-## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-# )
-
-## Mark other files for installation (e.g. launch and bag files, etc.)
-# install(FILES
-#   # myfile1
-#   # myfile2
-#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
-
-#############
-## Testing ##
-#############
-
-## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_xiaomi_bridge.cpp)
-# if(TARGET ${PROJECT_NAME}-test)
-#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
-# endif()
-
-## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)

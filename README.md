@@ -21,11 +21,15 @@ __What doesn't work__
 ## Requirements
 __1. Rooted Vacuum Cleaner:__ Please use the great work of Dennis Giese and Daniel Wegemer for doing this. Their repository can be found at [https://github.com/dgiese/dustcloud](https://github.com/dgiese/dustcloud).
 
-__2. Player client libraries:__ Depending on your distribution you might find packages or you have to build it from source. Detailed information and how-tos for this are available here, [http://playerstage.sourceforge.net/doc/Player-svn/player](http://playerstage.sourceforge.net/doc/Player-svn/player)
+__2. Disable Watchdog for RoboController:__ On the robot, in _"/opt/rockrobo/watchdog/ProcessList.conf"_ comment out the line _"RoboController,setsid RoboController&,1,3,0"_
 
-__3. Disable Watchdog for RoboController:__ On the robot, in _"/opt/rockrobo/watchdog/ProcessList.conf"_ comment out the line _"RoboController,setsid RoboController&,1,3,0"_
+__3. Disable Firewall "Drop" rules for Player ports:__ On the robot, in _"/opt/rockrobo/watchdog/rrwatchdoge.conf"_ comment out the lines _"iptables -I INPUT -j DROP -p tcp --dport 6665"_ and _"iptables -I INPUT -j DROP -p udp --dport 6665"_
 
-__4. Disable Firewall "Drop" rules for Player ports:__ On the robot, in _"/opt/rockrobo/watchdog/rrwatchdoge.conf"_ comment out the lines _"iptables -I INPUT -j DROP -p tcp --dport 6665"_ and _"iptables -I INPUT -j DROP -p udp --dport 6665"_
+__Notice:__
+
+The player client libraries are needed for this bridge and are built automatically.
+They are installed locally using the catkin_devel_prefix. This doesn't require root permissions and keeps the host system clean.
+Detailed information and how-tos for this library are available here, [http://playerstage.sourceforge.net/doc/Player-svn/player](http://playerstage.sourceforge.net/doc/Player-svn/player)
 
 ## Bridge Node
 The can be started on another computer in the same network as the the vacuum cleaner. It connects to the internally used player server for getting sensor data and commanding the robot to move.

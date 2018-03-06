@@ -1,0 +1,24 @@
+diff -Naur trunk/cmake/internal/SetupDirectories.cmake player-lib/cmake/internal/SetupDirectories.cmake
+--- trunk/cmake/internal/SetupDirectories.cmake	2018-03-06 15:26:41.956182200 +0900
++++ player-lib/cmake/internal/SetupDirectories.cmake	2018-03-06 15:34:32.585239300 +0900
+@@ -9,7 +9,7 @@
+ 
+ # Installation prefix for include files
+ STRING (TOLOWER ${PROJECT_NAME} projectNameLower)
+-SET (PLAYER_INCLUDE_INSTALL_DIR "include/${projectNameLower}-${PLAYER_MAJOR_VERSION}.${PLAYER_MINOR_VERSION}")
++SET (PLAYER_INCLUDE_INSTALL_DIR "include")
+ 
+ # Let the user take care of this
+ SET(LIB_SUFFIX "" CACHE STRING "Suffix for library installation directory")
+diff -Naur trunk/server/CMakeLists.txt player-lib/server/CMakeLists.txt
+--- trunk/server/CMakeLists.txt	2018-03-06 15:26:09.024861499 +0900
++++ player-lib/server/CMakeLists.txt	2018-03-06 15:16:42.639899902 +0900
+@@ -8,7 +8,7 @@
+ ADD_SUBDIRECTORY (libplayerdrivers)
+ 
+ # Write out a report on the drivers to be built or not to be built (that is the question)
+-WRITE_DRIVER_REPORT ()
++# WRITE_DRIVER_REPORT ()
+ 
+ # Build the server app
+ # Extra include dir for the server (why do we need this directoy?)
