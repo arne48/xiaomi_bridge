@@ -32,7 +32,7 @@ They are installed locally using the catkin_devel_prefix. This doesn't require r
 Detailed information and how-tos for this library are available here, [http://playerstage.sourceforge.net/doc/Player-svn/player](http://playerstage.sourceforge.net/doc/Player-svn/player)
 
 ## Bridge Node
-The can be started on another computer in the same network as the the vacuum cleaner. It connects to the internally used player server for getting sensor data and commanding the robot to move.
+The node can be started on another computer in the same network as the vacuum cleaner. It connects to the internally used player server for getting sensor data and commanding the robot.
 
 ### Startup
 1. Make sure the RoboController is not running.
