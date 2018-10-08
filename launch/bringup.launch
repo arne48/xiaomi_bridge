@@ -8,7 +8,7 @@
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="use_gui" value="false"/>
   </node>
-  <!--<node pkg="xiaomi_bridge" type="xiaomi_bridge_node" name="xiaomi_bridge_node">
+  <node pkg="xiaomi_bridge" type="xiaomi_bridge_node" name="xiaomi_bridge_node">
     <param name="vacuum_ip" type="str" value="192.168.0.20" />
-  </node>-->
+  </node>
 </launch>
