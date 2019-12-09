@@ -70,7 +70,7 @@ The configuration for the navigation stack is closely oriented to the TurtleBot.
 
 ### rviz configuration overview
 
-![ ](https://drive.google.com/uc?id=1Qw-3iiU4P2gYF4RGi7YdM-dyWkz8WmFI  "rviz overview")
+![ ](https://drive.google.com/open?id=1Qw-3iiU4P2gYF4RGi7YdM-dyWkz8WmFI  "rviz overview")
 
 ## Known issues
 1. The robot can't be controlled while a bumper is pressed.
