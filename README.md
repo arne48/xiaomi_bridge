@@ -70,7 +70,7 @@ The configuration for the navigation stack is closely oriented to the TurtleBot.
 
 ### rviz configuration overview
 
-![rviz overview](https://raw.githubusercontent.com/arne48/xiaomi_bridge/images/rviz_xiaomi.png)
+![rviz overview](https://raw.githubusercontent.com/arne48/xiaomi_bridge/master/images/rviz_xiaomi.png)
 
 ## Known issues
 1. The robot can't be controlled while a bumper is pressed.
