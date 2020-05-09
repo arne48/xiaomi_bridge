@@ -1,10 +1,11 @@
 #include <xiaomi_bridge/xiaomi_topic_handler.h>
 
 XiaomiTopicHandler::XiaomiTopicHandler()
-: Node("xiaomi_topic_handler_node")
+: Node("xiaomi_bridge_node")
 {
   node_handle_ = std::shared_ptr<::rclcpp::Node>(this, [](::rclcpp::Node *) {});
-  this->get_parameter_or<std::string>("vacuum_ip", vacuum_ip_, std::string("192.168.8.1"));
+  this->declare_parameter("connection_parameters.vacuum_ip");
+  this->get_parameter_or<std::string>("connection_parameters.vacuum_ip", vacuum_ip_, std::string("192.168.10.2"));
   RCLCPP_INFO(this->get_logger(), "Connecting to Xiaomi Cleaner.");
   // TODO add logic if connection to robot couldn't be established
   player_interface_ = new XiaomiPlayerInterface(vacuum_ip_);
@@ -69,7 +70,7 @@ void XiaomiTopicHandler::run()
 void XiaomiTopicHandler::publishWallDistance_(struct irData_t data)
 {
   auto msg = sensor_msgs::msg::Range();
-  msg.header.stamp = rclcpp::Time();
+  msg.header.stamp = this->now();
   msg.header.frame_id = "wall_distance_link";
   msg.radiation_type = sensor_msgs::msg::Range::INFRARED;
   msg.max_range = 0.055;
@@ -84,7 +85,7 @@ void XiaomiTopicHandler::publishCliffData_(struct irData_t data)
 {
 
   auto msg = sensor_msgs::msg::Range();
-  msg.header.stamp = rclcpp::Time();
+  msg.header.stamp = this->now();
   msg.header.frame_id = "cliff_sensor_fr_link";
   msg.radiation_type = sensor_msgs::msg::Range::INFRARED;
   msg.max_range = 1.0;
@@ -110,7 +111,7 @@ void XiaomiTopicHandler::publishCliffData_(struct irData_t data)
 void XiaomiTopicHandler::publishFrontSonar_(double data)
 {
   auto msg = sensor_msgs::msg::Range();
-  msg.header.stamp = rclcpp::Time();
+  msg.header.stamp = this->now();
   msg.header.frame_id = "front_sonar_link";
   msg.radiation_type = sensor_msgs::msg::Range::ULTRASOUND;
   msg.max_range = 0.36;
@@ -124,7 +125,7 @@ void XiaomiTopicHandler::publishFrontSonar_(double data)
 void XiaomiTopicHandler::publishBatteryState_(struct batteryState_t data)
 {
   auto msg = sensor_msgs::msg::BatteryState();
-  msg.header.stamp = rclcpp::Time();
+  msg.header.stamp = this->now();
   msg.present = 1;
   msg.power_supply_health = sensor_msgs::msg::BatteryState::POWER_SUPPLY_HEALTH_UNKNOWN;
   msg.power_supply_technology = sensor_msgs::msg::BatteryState::POWER_SUPPLY_TECHNOLOGY_LION;
@@ -150,7 +151,7 @@ void XiaomiTopicHandler::publishBatteryState_(struct batteryState_t data)
 void XiaomiTopicHandler::publishLaserScan_(float *scan_data)
 {
   auto msg = sensor_msgs::msg::LaserScan();
-  msg.header.stamp = rclcpp::Time();
+  msg.header.stamp = this->now();
   msg.header.frame_id = "base_laser_link";
 
   msg.angle_max = (float)M_PI;
@@ -168,7 +169,7 @@ void XiaomiTopicHandler::publishLaserScan_(float *scan_data)
 void XiaomiTopicHandler::publishOdometry_(struct odometryData_t data)
 {
   auto msg = nav_msgs::msg::Odometry();
-  msg.header.stamp = rclcpp::Time();
+  msg.header.stamp = this->now();
   msg.header.frame_id = "odom";
   msg.child_frame_id = "base_footprint";
 
@@ -193,7 +194,7 @@ void XiaomiTopicHandler::publishOdometry_(struct odometryData_t data)
   odom_pub_->publish(msg);
 
   geometry_msgs::msg::TransformStamped transform;
-  transform.header.stamp = rclcpp::Time();
+  transform.header.stamp = this->now();
   transform.header.frame_id = "odom";
   transform.child_frame_id = "base_footprint";
   transform.transform.translation.x = data.px;

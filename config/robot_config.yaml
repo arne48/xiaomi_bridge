@@ -1,5 +1,4 @@
 xiaomi_bridge_node:
   ros__parameters:
-
     connection_parameters:
-      vacuum_ip: 192.168.0.1
+      vacuum_ip: 192.168.10.25
