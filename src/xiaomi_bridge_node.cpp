@@ -2,12 +2,11 @@
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "xiaomi_bridge_node");
-  ros::NodeHandle nh("~");
+  rclcpp::init(argc, argv);
+  XiaomiTopicHandler *handle = new XiaomiTopicHandler();
+  handle->run();
 
-  XiaomiTopicHandler *handler = new XiaomiTopicHandler(nh);
-  handler->run();
-
-  delete handler;
+  delete handle;
+  rclcpp::shutdown();
   return 0;
 }
