@@ -11,6 +11,7 @@ find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
 
 ExternalProject_Add(player-lib
   SVN_REPOSITORY https://svn.code.sf.net/p/playerstage/svn/code/player/trunk
@@ -23,19 +24,35 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}/player-lib-install/include
 )
 
-add_executable(xiaomi_bridge_node src/xiaomi_bridge_node.cpp src/xiaomi_topic_handler.cpp src/xiaomi_player_interface.cpp)
+set(EXECUTABLE_NAME "xiaomi_bridge_node")
 
-#add_dependencies(xiaomi_bridge_node player-lib)
+add_executable(${EXECUTABLE_NAME}
+  src/xiaomi_bridge_node.cpp
+  src/xiaomi_topic_handler.cpp
+  src/xiaomi_player_interface.cpp)
 
-ament_target_dependencies(${PROJECT_NAME}_node
+target_link_libraries(${EXECUTABLE_NAME}
+  ${CMAKE_CURRENT_BINARY_DIR}/player-lib-install/lib/libplayerc.so
+)
+
+ament_target_dependencies(${EXECUTABLE_NAME}
   "rclcpp"
   "nav_msgs"
   "sensor_msgs"
   "geometry_msgs"
   "tf2"
+  "tf2_ros"
 )
 
-target_link_libraries(${PROJECT_NAME}_node
-  ${CMAKE_CURRENT_BINARY_DIR}/player-lib-install/lib/libplayerc.so
+install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
 )
+install(DIRECTORY param
+  DESTINATION share/${PROJECT_NAME}
+)
+install(TARGETS ${EXECUTABLE_NAME}
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+ament_export_include_directories(include)
 ament_package()

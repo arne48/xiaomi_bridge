@@ -5,6 +5,7 @@
 #include <chrono>
 #include <memory>
 #include <rclcpp/rclcpp.hpp>
+#include <tf2/LinearMath/Quaternion.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <sensor_msgs/msg/laser_scan.hpp>
 #include <sensor_msgs/msg/range.hpp>
@@ -29,18 +30,18 @@ public:
 
 private:
   void cmdVelCallback_(const geometry_msgs::msg::Twist::SharedPtr msg) const;
+  void publishBatteryState_(struct batteryState_t);
+  void publishOdometry_(struct odometryData_t);
   void publishWallDistance_(struct irData_t);
   void publishCliffData_(struct irData_t);
   void publishFrontSonar_(double);
-  void publishBatteryState_(struct batteryState_t);
   void publishLaserScan_(float*);
-  void publishOdometry_(struct odometryData_t);
 
   XiaomiPlayerInterface *player_interface_;
   rclcpp::Node::SharedPtr node_handle_;
   rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
-  //tf2_ros::TransformBroadcaster tf_broadcaster_;
-
+  std::unique_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;  
+  
   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
   rclcpp::Publisher<sensor_msgs::msg::LaserScan>::SharedPtr laser_pub_;
   rclcpp::Publisher<sensor_msgs::msg::BatteryState>::SharedPtr battery_pub_;

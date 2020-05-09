@@ -4,11 +4,13 @@ XiaomiTopicHandler::XiaomiTopicHandler()
 : Node("xiaomi_topic_handler_node")
 {
   node_handle_ = std::shared_ptr<::rclcpp::Node>(this, [](::rclcpp::Node *) {});
-  //nh_.param<std::string>("vacuum_ip", vacuum_ip_, "192.168.8.1");
+  this->get_parameter_or<std::string>("vacuum_ip", vacuum_ip_, std::string("192.168.8.1"));
   RCLCPP_INFO(this->get_logger(), "Connecting to Xiaomi Cleaner.");
+  // TODO add logic if connection to robot couldn't be established
   player_interface_ = new XiaomiPlayerInterface(vacuum_ip_);
   RCLCPP_INFO(this->get_logger(), "Successfully connected to Xiaomi Cleaner.");
 
+  tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(this);
 
   cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
     "/cmd_vel", 10, std::bind(&XiaomiTopicHandler::cmdVelCallback_, this, _1));
@@ -177,12 +179,16 @@ void XiaomiTopicHandler::publishOdometry_(struct odometryData_t data)
   msg.twist.twist.angular.y = 0.0;
   msg.twist.twist.angular.z = data.rot_vy;
 
-  geometry_msgs::msg::Quaternion quat = tf::createQuaternionMsgFromRollPitchYaw(0.0, 0.0, data.rot_py);
-
+  tf2::Quaternion q;
+  q.setRPY(0.0, 0.0, data.rot_py);
+    
   msg.pose.pose.position.x = data.px;
   msg.pose.pose.position.y = data.py;
   msg.pose.pose.position.z = 0.0;
-  msg.pose.pose.orientation = quat;
+  msg.pose.pose.orientation.x = q.x();
+  msg.pose.pose.orientation.y = q.y();
+  msg.pose.pose.orientation.z = q.z();
+  msg.pose.pose.orientation.w = q.w();
 
   odom_pub_->publish(msg);
 
@@ -193,9 +199,12 @@ void XiaomiTopicHandler::publishOdometry_(struct odometryData_t data)
   transform.transform.translation.x = data.px;
   transform.transform.translation.y = data.py;
   transform.transform.translation.z = 0.0;
-  transform.transform.rotation = quat;
+  transform.transform.rotation.x = q.x();
+  transform.transform.rotation.y = q.y();
+  transform.transform.rotation.z = q.z();
+  transform.transform.rotation.w = q.w();
 
-  tf_broadcaster_.sendTransform(transform);
+  //tf_broadcaster_->sendTransform(transform);
 }
 
 void XiaomiTopicHandler::cmdVelCallback_(const geometry_msgs::msg::Twist::SharedPtr msg) const
