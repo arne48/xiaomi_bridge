@@ -21,6 +21,7 @@ XiaomiTopicHandler::XiaomiTopicHandler()
   battery_pub_= this->create_publisher<sensor_msgs::msg::BatteryState>("/battery_state", 10);
   sonar_pub_= this->create_publisher<sensor_msgs::msg::Range>("/front_sonar", 10);
 
+  //TODO no data from the following sensors
   wall_ir_pub_= this->create_publisher<sensor_msgs::msg::Range>("/wall_distance", 10);
 
   cliff_fr_pub_= this->create_publisher<sensor_msgs::msg::Range>("/cliff/front_right", 10);
@@ -205,7 +206,7 @@ void XiaomiTopicHandler::publishOdometry_(struct odometryData_t data)
   transform.transform.rotation.z = q.z();
   transform.transform.rotation.w = q.w();
 
-  //tf_broadcaster_->sendTransform(transform);
+  tf_broadcaster_->sendTransform(transform);
 }
 
 void XiaomiTopicHandler::cmdVelCallback_(const geometry_msgs::msg::Twist::SharedPtr msg) const

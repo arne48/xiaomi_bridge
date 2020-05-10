@@ -12,24 +12,23 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
 
-    xiaomi_param_file = get_package_share_directory('xiaomi_bridge') + '/config/robot_config.yaml'
-    
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-
+    urdf = os.path.join(
+        get_package_share_directory('xiaomi_bridge'),
+        'urdf',
+        'xiaomi_gen1.urdf')
+    
     return LaunchDescription([
         DeclareLaunchArgument(
             'use_sim_time',
-            default_value=use_sim_time,
+            default_value='false',
             description='Use simulation (Gazebo) clock if true'),
-        
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([ThisLaunchFileDir(), '/xiaomi_robot_state.launch.py']),
-            launch_arguments={'use_sim_time': use_sim_time}.items(),
-        ),
 
         Node(
-            package='xiaomi_bridge',
-            node_executable='xiaomi_bridge_node',
-            parameters=[xiaomi_param_file],
-            output='screen'),
+            package='robot_state_publisher',
+            node_executable='robot_state_publisher',
+            node_name='robot_state_publisher',
+            output='screen',
+            parameters=[{'use_sim_time': use_sim_time}],
+            arguments=[urdf]),
     ])

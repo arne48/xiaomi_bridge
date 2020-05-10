@@ -44,10 +44,7 @@ ament_target_dependencies(${EXECUTABLE_NAME}
   "tf2_ros"
 )
 
-install(DIRECTORY launch
-  DESTINATION share/${PROJECT_NAME}
-)
-install(DIRECTORY config
+install(DIRECTORY config launch rviz urdf
   DESTINATION share/${PROJECT_NAME}
 )
 install(TARGETS ${EXECUTABLE_NAME}
