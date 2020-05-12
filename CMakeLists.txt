@@ -35,6 +35,8 @@ target_link_libraries(${EXECUTABLE_NAME}
   ${CMAKE_CURRENT_BINARY_DIR}/player-lib-install/lib/libplayerc.so
 )
 
+add_dependencies(${EXECUTABLE_NAME} player-lib)
+
 ament_target_dependencies(${EXECUTABLE_NAME}
   "rclcpp"
   "nav_msgs"
