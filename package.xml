@@ -12,7 +12,9 @@
   <author>Arne Hitzmann</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <depend>rclcpp</depend>  
+  <depend>libgeos++-dev</depend>
+  <depend>subversion</depend>
+  <depend>rclcpp</depend>
   <depend>nav_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>std_msgs</depend>
