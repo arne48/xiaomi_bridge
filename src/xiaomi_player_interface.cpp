@@ -52,14 +52,20 @@ void XiaomiPlayerInterface::updateRobotState()
 
 irData_t XiaomiPlayerInterface::getIrSensorData()
 {
+  if (ir_wall_->data.ranges_count == 4)
+  {
     struct irData_t data = {
-      .wall = ir_wall_->data.ranges[0],
-      .cliff0 = ir_cliff_->data.ranges[0],
-      .cliff1 = ir_cliff_->data.ranges[1],
-      .cliff2 = ir_cliff_->data.ranges[2],
-      .cliff3 = ir_cliff_->data.ranges[3]
+	    .wall = ir_wall_->data.ranges[0],
+	    .cliff0 = ir_cliff_->data.ranges[0],
+	    .cliff1 = ir_cliff_->data.ranges[1],
+	    .cliff2 = ir_cliff_->data.ranges[2],
+	    .cliff3 = ir_cliff_->data.ranges[3]
     };
     return data;
+  } else	
+  {	
+    return {0.0, 0.0, 0.0, 0.0};	
+  }
 }
 
 double XiaomiPlayerInterface::getSonarData()

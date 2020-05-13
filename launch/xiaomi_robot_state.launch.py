@@ -13,10 +13,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-    urdf = os.path.join(
-        get_package_share_directory('xiaomi_bridge'),
-        'urdf',
-        'xiaomi_gen1.urdf')
+    urdf = get_package_share_directory('xiaomi_bridge') + '/urdf/xiaomi_gen1.urdf'
     
     return LaunchDescription([
         DeclareLaunchArgument(

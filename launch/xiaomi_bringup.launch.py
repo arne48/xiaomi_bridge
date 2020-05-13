@@ -13,7 +13,6 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 def generate_launch_description():
 
     xiaomi_param_file = get_package_share_directory('xiaomi_bridge') + '/config/robot_config.yaml'
-    
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
 
     return LaunchDescription([
