@@ -12,9 +12,9 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     map_dir = LaunchConfiguration('map', default=get_package_share_directory('xiaomi_bridge') + '/map/test.yaml')
     param_dir = LaunchConfiguration('params', default=get_package_share_directory('xiaomi_bridge') + '/config/xiaomi_navigation.yaml')
+    rviz_config_dir = get_package_share_directory('xiaomi_bridge') + '/rviz/xiaomi_navigation.rviz'
 
-    nav2_launch_file_dir = get_package_share_directory('nav2_bringup') + '/launch' 
-    rviz_config_dir = get_package_share_directory('nav2_bringup') + '/launch/nav2_default_view.rviz'
+    nav2_launch_file_dir = get_package_share_directory('nav2_bringup') + '/launch'
 
     return LaunchDescription([
         DeclareLaunchArgument(
