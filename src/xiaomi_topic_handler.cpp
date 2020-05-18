@@ -4,7 +4,7 @@ XiaomiTopicHandler::XiaomiTopicHandler()
 : Node("xiaomi_bridge_node")
 {
   this->declare_parameter("connection_parameters.vacuum_ip");
-  this->get_parameter_or<std::string>("connection_parameters.vacuum_ip", vacuum_ip_, std::string("192.168.10.2"));
+  this->get_parameter_or<std::string>("connection_parameters.vacuum_ip", vacuum_ip_, std::string("192.168.8.1"));
  
   RCLCPP_INFO(this->get_logger(), "Connecting to Xiaomi Cleaner.");
   // TODO add logic if connection to robot couldn't be established
@@ -33,9 +33,9 @@ XiaomiTopicHandler::XiaomiTopicHandler()
 
 XiaomiTopicHandler::~XiaomiTopicHandler()
 {
-  std::cout<<"Closing connection to Xiaomi Cleaner."<<std::endl;
+  RCLCPP_INFO(this->get_logger(), "Closing connection to Xiaomi Cleaner.");
   player_interface_->cleanup();
-  std::cout<<"Connection to Xiaomi Cleaner closed."<<std::endl;
+  RCLCPP_INFO(this->get_logger(), "Connection to Xiaomi Cleaner closed.");
   delete player_interface_;
 }
 
