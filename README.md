@@ -1,4 +1,4 @@
-# Xiaomi Vacuum Cleaner ROS Bridge
+# Xiaomi Vacuum Cleaner ROS2 Bridge
 
 ## Introduction
 This package bridges between a rooted Xiaomi Vacuum Cleaner, publishes its sensor data, and forwards Twist messages to drive the robot.
@@ -35,16 +35,24 @@ Detailed information and how-tos for this library are available here, [http://pl
 The node can be started on another computer in the same network as the vacuum cleaner. It connects to the internally used player server for getting sensor data and commanding the robot.
 
 ### Startup
+#### Robot
 1. Make sure the RoboController is not running.
 2. Connect to the robot by ssh and start the RoboController via _"/opt/rockrobo/cleaner/bin/RoboController"_.
 3. Push the "Home" button on the robot to let it search for the dock.
 4. Once the robot keeps moving, kill the RoboController via _Ctrl-C_
 5. Lift the robot to interrupt its navigation.
 6. Now you should just hear the LaserScanner turning. If so, the robot is ready to be controlled by you.
+#### Cartographer
+1. _ros2 launch xiaomi_bridge xiaomi_bringup.launch.py_
+2. _ros2 launch xiaomi_bridge xiaomi_cartographer.launch.py_
+3. Saving your map -> _ros2 run nav2_map_server map_saver_cli_
+#### Navigation
+1. _ros2 launch xiaomi_bridge xiaomi_bringup.launch.py_
+2. _ros2 launch xiaomi_bridge xiaomi_navigation.launch.py map:={PATH_TO_MAP}_
 
 ### Details
 * *Parameter*
-	* _\~ vacuum\_ip [str]_ __|__ _IP addres of the robot._ __default:__ _192.168.8.1_
+	* vacuum\_ip [str]_ __|__ _IP address of the robot._ __default:__ _192.168.8.1_
 * *Topics*
 	* _/cmd\_vel [geometry\_msgs::Twist]_
 	* _/scan [sensor\_msgs::LaserScan]_
@@ -57,19 +65,23 @@ The node can be started on another computer in the same network as the vacuum cl
 	* _/cliff/right [sensor\_msgs::Range]_
 	* _/cliff/left [sensor\_msgs::Range]_
 * *Launch Files*
-	* _bringup.launch_ __|__ starts the xiaomi_bridge_node, loads the robot model, and starts the robot state publisher. Contains the setting of the IP address parameter.
-	* _move_base.launch_ __|__ starts the move_base node
-	* _navigation.launch_ __|__ starts all needed nodes and loads all parameters for navigation
-	* _rviz.launch_ __|__ starts rviz with the provided config file
-	
+	* _xiaomi_bringup.launch.py_ __|__ starts the xiaomi_bridge_node, loads the robot model, and starts the robot state publisher. Contains the setting of the IP address parameter.
+	* _xiaomi_robot_state.launch.py_ __|__ loads the robot's urdf model and starts the robot state publisher
+	* _xiaomi_navigation.launch.py_ __|__ loads navigation paramteres, brings up nav2 and starts rviz2
+	* _xiaomi_cartographer.launch.py_ __|__ starts cartographer, invokes occupancy_grid.launch.py, and starts rviz2
+	* _occupancy_grid.launch.py_ __|__ starts the occupancy grid node
+* *Config Files*
+	* _robot_config.yaml_ __|__ contains the IP address of the robot
+	* _xiaomi_navigation.yaml_ __|__ contains the navigation parameters for nav2
+	* _xiaomi_cartographer.lua_ __|__ contains the parameters for cartographer
 	
 	
 ## Navigation
-The configuration for the navigation stack is closely oriented to the TurtleBot. You can find more information and tutorials in its ROS wiki.
-[http://wiki.ros.org/Robots/TurtleBot](http://wiki.ros.org/Robots/TurtleBot)
+The configuration for the navigation stack is closely oriented to the TurtleBot. You can find more information and tutorials in Robotis' manual.
+[https://emanual.robotis.com/docs/en/platform/turtlebot3/ros2_setup/](https://emanual.robotis.com/docs/en/platform/turtlebot3/ros2_setup/)
 
 ### rviz configuration overview
-
+(to be updated)
 ![rviz overview](https://raw.githubusercontent.com/arne48/xiaomi_bridge/master/images/rviz_xiaomi.png)
 
 ## Known issues
