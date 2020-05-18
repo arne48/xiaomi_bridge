@@ -19,6 +19,7 @@
 #include <xiaomi_bridge/xiaomi_player_interface.h>
 
 using std::placeholders::_1;
+using namespace std::chrono_literals;
 
 class XiaomiTopicHandler : public rclcpp::Node
 {
@@ -26,7 +27,7 @@ public:
   XiaomiTopicHandler();
   ~XiaomiTopicHandler();
 
-  void run();
+  void publish();
 
 private:
   void cmdVelCallback_(const geometry_msgs::msg::Twist::SharedPtr msg) const;
@@ -38,7 +39,7 @@ private:
   void publishLaserScan_(float*);
 
   XiaomiPlayerInterface *player_interface_;
-  rclcpp::Node::SharedPtr node_handle_;
+  rclcpp::TimerBase::SharedPtr timer_;
   rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
   std::unique_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;  
   
@@ -55,6 +56,7 @@ private:
   rclcpp::Publisher<sensor_msgs::msg::Range>::SharedPtr cliff_l_pub_;
 
   std::string vacuum_ip_;
+  float laser_scan_data_[360];
 
 };
 

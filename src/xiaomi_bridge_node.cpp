@@ -3,10 +3,7 @@
 int main(int argc, char **argv)
 {
   rclcpp::init(argc, argv);
-  XiaomiTopicHandler *handle = new XiaomiTopicHandler();
-  handle->run();
-
-  delete handle;
+  rclcpp::spin(std::make_shared<XiaomiTopicHandler>());
   rclcpp::shutdown();
   return 0;
 }

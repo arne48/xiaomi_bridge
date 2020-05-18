@@ -1,6 +1,8 @@
 #include <xiaomi_bridge/xiaomi_player_interface.h>
 #include <libplayerc/playerc.h>
 
+//TODO get bad init feedback
+
 XiaomiPlayerInterface::XiaomiPlayerInterface(std::string vacuum_ip)
 {
 

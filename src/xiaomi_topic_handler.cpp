@@ -3,9 +3,9 @@
 XiaomiTopicHandler::XiaomiTopicHandler()
 : Node("xiaomi_bridge_node")
 {
-  node_handle_ = std::shared_ptr<::rclcpp::Node>(this, [](::rclcpp::Node *) {});
   this->declare_parameter("connection_parameters.vacuum_ip");
   this->get_parameter_or<std::string>("connection_parameters.vacuum_ip", vacuum_ip_, std::string("192.168.10.2"));
+ 
   RCLCPP_INFO(this->get_logger(), "Connecting to Xiaomi Cleaner.");
   // TODO add logic if connection to robot couldn't be established
   player_interface_ = new XiaomiPlayerInterface(vacuum_ip_);
@@ -18,53 +18,45 @@ XiaomiTopicHandler::XiaomiTopicHandler()
 
   odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("/odom", 10);
   laser_pub_ = this->create_publisher<sensor_msgs::msg::LaserScan>("/scan", 10);
-  battery_pub_= this->create_publisher<sensor_msgs::msg::BatteryState>("/battery_state", 10);
-  sonar_pub_= this->create_publisher<sensor_msgs::msg::Range>("/front_sonar", 10);
+  battery_pub_ = this->create_publisher<sensor_msgs::msg::BatteryState>("/battery_state", 10);
+  sonar_pub_ = this->create_publisher<sensor_msgs::msg::Range>("/front_sonar", 10);
 
-  wall_ir_pub_= this->create_publisher<sensor_msgs::msg::Range>("/wall_distance", 10);
+  wall_ir_pub_ = this->create_publisher<sensor_msgs::msg::Range>("/wall_distance", 10);
 
-  cliff_fr_pub_= this->create_publisher<sensor_msgs::msg::Range>("/cliff/front_right", 10);
-  cliff_fl_pub_= this->create_publisher<sensor_msgs::msg::Range>("/cliff/front_left", 10);
-  cliff_r_pub_= this->create_publisher<sensor_msgs::msg::Range>("/cliff/right", 10);
-  cliff_l_pub_= this->create_publisher<sensor_msgs::msg::Range>("/cliff/left", 10);
+  cliff_fr_pub_ = this->create_publisher<sensor_msgs::msg::Range>("/cliff/front_right", 10);
+  cliff_fl_pub_ = this->create_publisher<sensor_msgs::msg::Range>("/cliff/front_left", 10);
+  cliff_r_pub_ = this->create_publisher<sensor_msgs::msg::Range>("/cliff/right", 10);
+  cliff_l_pub_ = this->create_publisher<sensor_msgs::msg::Range>("/cliff/left", 10);
+  
+  timer_ = this->create_wall_timer(75ms, std::bind(&XiaomiTopicHandler::publish, this));
 }
 
 XiaomiTopicHandler::~XiaomiTopicHandler()
 {
-  delete player_interface_;
-}
-
-void XiaomiTopicHandler::run()
-{
-  rclcpp::Rate loop_rate(20);
-  float laser_scan_data[360] = {0};
-
-  while (rclcpp::ok())
-  {
-    player_interface_->updateRobotState();
-    struct irData_t ir_data = player_interface_->getIrSensorData();
-    publishWallDistance_(ir_data);
-    publishCliffData_(ir_data);
-
-    double sonar_data = player_interface_->getSonarData();
-    publishFrontSonar_(sonar_data);
-
-    struct batteryState_t battery_data = player_interface_->getBatteryData();
-    publishBatteryState_(battery_data);
-
-    player_interface_->getLaserData(laser_scan_data);
-    publishLaserScan_(laser_scan_data);
-
-    struct odometryData_t odom_data = player_interface_->getOdometryData();
-    publishOdometry_(odom_data);
-
-    rclcpp::spin_some(node_handle_);
-    loop_rate.sleep();
-  }
-
   std::cout<<"Closing connection to Xiaomi Cleaner."<<std::endl;
   player_interface_->cleanup();
   std::cout<<"Connection to Xiaomi Cleaner closed."<<std::endl;
+  delete player_interface_;
+}
+
+void XiaomiTopicHandler::publish()
+{
+  player_interface_->updateRobotState();
+  struct irData_t ir_data = player_interface_->getIrSensorData();
+  publishWallDistance_(ir_data);
+  publishCliffData_(ir_data);
+
+  double sonar_data = player_interface_->getSonarData();
+  publishFrontSonar_(sonar_data);
+
+  struct batteryState_t battery_data = player_interface_->getBatteryData();
+  publishBatteryState_(battery_data);
+
+  player_interface_->getLaserData(laser_scan_data_);
+  publishLaserScan_(laser_scan_data_);
+
+  struct odometryData_t odom_data = player_interface_->getOdometryData();
+  publishOdometry_(odom_data);
 }
 
 void XiaomiTopicHandler::publishWallDistance_(struct irData_t data)
