@@ -2,6 +2,7 @@
 #define XIAOMI_BRIDGE_XIAOMI_TOPIC_HANDLER_H
 
 #include <math.h>
+#include <string>
 #include <chrono>
 #include <memory>
 #include <rclcpp/rclcpp.hpp>

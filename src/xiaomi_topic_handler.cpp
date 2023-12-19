@@ -3,7 +3,7 @@
 XiaomiTopicHandler::XiaomiTopicHandler()
 : Node("xiaomi_bridge_node")
 {
-  this->declare_parameter("connection_parameters.vacuum_ip");
+  this->declare_parameter("connection_parameters.vacuum_ip", "192.168.8.1");
   this->get_parameter_or<std::string>("connection_parameters.vacuum_ip", vacuum_ip_, std::string("192.168.8.1"));
  
   RCLCPP_INFO(this->get_logger(), "Connecting to Xiaomi Cleaner.");
